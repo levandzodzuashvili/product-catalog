@@ -1,0 +1,392 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ product.name }} | ProductHub Luxury</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #6366f1;
+        --secondary: #a855f7;
+        --accent: #f5576c;
+        --bg: #050505;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-muted: #94a3b8;
+      }
+
+      body {
+        background: var(--bg);
+        color: white;
+        margin: 0;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        line-height: 1.6;
+      }
+
+      /* --- BACKGROUND --- */
+      .bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        background: radial-gradient(circle at center, #0f172a 0%, #000 100%);
+      }
+
+      /* --- NAVIGATION --- */
+      .navbar {
+        padding: 1.5rem 2rem;
+      }
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border-radius: 100px;
+        border: 1px solid var(--glass-border);
+        padding: 0.7rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo a {
+        text-decoration: none;
+        color: white;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* --- LAYOUT --- */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      .breadcrumb {
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      .breadcrumb a {
+        color: var(--primary);
+        text-decoration: none;
+        margin-right: 5px;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 4rem;
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: 40px;
+        padding: 3rem;
+        backdrop-filter: blur(10px);
+      }
+
+      /* --- IMAGES --- */
+      .image-viewer {
+        position: sticky;
+        top: 100px;
+      }
+      .main-img-wrap {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 30px;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .main-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* --- PRODUCT INFO --- */
+      .badge {
+        background: var(--primary);
+        padding: 5px 15px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+      .out-of-stock {
+        background: #334155;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin: 0 0 1rem 0;
+        font-weight: 800;
+        letter-spacing: -2px;
+      }
+      .price-row {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .current-price {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+      }
+
+      .description-box {
+        margin-bottom: 2rem;
+        color: #cbd5e1;
+        font-size: 1.1rem;
+      }
+
+      .spec-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 20px;
+      }
+      .spec-item span {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+      .spec-item strong {
+        font-size: 1rem;
+        color: white;
+      }
+
+      /* --- BUTTONS --- */
+      .btn {
+        padding: 1.2rem 2rem;
+        border-radius: 100px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: none;
+        font-size: 1rem;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: white;
+        width: 100%;
+      }
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      /* --- RELATED --- */
+      .related-section {
+        margin-top: 5rem;
+      }
+      .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+      }
+      .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      .related-card {
+        background: var(--glass);
+        border-radius: 25px;
+        padding: 1rem;
+        border: 1px solid var(--glass-border);
+        text-decoration: none;
+        color: white;
+        transition: 0.3s;
+      }
+      .related-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-5px);
+      }
+      .related-img {
+        height: 180px;
+        border-radius: 15px;
+        background: #000;
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+      .related-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      @media (max-width: 900px) {
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-canvas"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <a href="{% url 'market:product_list' %}">
+            <svg width="24" height="24" viewBox="0 0 32 32">
+              <rect width="32" height="32" rx="8" fill="var(--primary)" />
+              <path d="M16 8L22 14L16 20L10 14L16 8Z" fill="white" />
+            </svg>
+            ProductHub
+          </a>
+        </div>
+        <div class="nav-actions">
+          <a
+            href="{% url 'market:cart' %}"
+            style="color: white; position: relative"
+          >
+            🛒 {% if cart_count > 0 %}<span
+              style="
+                background: var(--accent);
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                font-size: 0.7rem;
+                padding: 2px 6px;
+                border-radius: 50%;
+              "
+              >{{ cart_count }}</span
+            >{% endif %}
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="{% url 'market:product_list' %}">Catalog</a> /
+        <span>{{ product.name }}</span>
+      </div>
+
+      <main class="product-grid">
+        <div class="image-viewer">
+          <div class="main-img-wrap">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+            {% else %}
+            <span style="font-size: 5rem">📦</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="product-info">
+          <span class="badge {% if product.stock < 1 %}out-of-stock{% endif %}">
+            {% if product.stock < 1 %}Sold Out{% else %}Available Now{% endif %}
+          </span>
+
+          <h1>{{ product.name }}</h1>
+
+          <div class="price-row">
+            <span class="current-price">${{ product.price }}</span>
+          </div>
+
+          <div class="description-box">
+            <p>{{ product.description }}</p>
+          </div>
+
+          <div class="spec-list">
+            <div class="spec-item">
+              <span>Reference ID</span>
+              <strong>#PH-{{ product.id }}</strong>
+            </div>
+            <div class="spec-item">
+              <span>Category</span>
+              <strong>{{ product.category.name|default:"General" }}</strong>
+            </div>
+            <div class="spec-item">
+              <span>Inventory</span>
+              <strong>{{ product.stock }} units</strong>
+            </div>
+            <div class="spec-item">
+              <span>Delivery</span>
+              <strong>Priority Shipping</strong>
+            </div>
+          </div>
+
+          {% if product.stock > 0 %}
+          <form
+            method="post"
+            action="{% url 'market:add_to_cart' product.id %}"
+          >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">
+              Add to Shopping Bag
+            </button>
+          </form>
+          {% endif %}
+
+          <a
+            >href="{% url 'market:product_edit' product.pk %}" class="btn
+            btn-outline"> >Edit Product Details</a
+          >
+        </div>
+      </main>
+
+      {% if related_products %}
+      <section class="related-section">
+        <h2 class="section-title">You Might Also Like</h2>
+        <div class="related-grid">
+          {% for related in related_products %}
+          <a
+            href="{% url 'market:product_detail' related.id %}"
+            class="related-card"
+          >
+            <div class="related-img">
+              {% if related.image %}<img
+                src="{{ related.image.url }}"
+                alt="{{ related.name }}"
+              />{% else %}<span>📦</span>{% endif %}
+            </div>
+            <h3 style="margin: 0; font-size: 1rem">{{ related.name }}</h3>
+            <span style="color: var(--primary); font-weight: 800"
+              >${{ related.price }}</span
+            >
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+    </div>
+  </body>
+</html>
