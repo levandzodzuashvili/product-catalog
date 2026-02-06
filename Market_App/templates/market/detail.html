@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'market/style.css' %}">
+</head>
+<body>
+<h1>{{ product.name }}</h1>
+<p>Price: ${{ product.price }}</p>
+<p>{{ product.description }}</p>
+<a class="btn" href="{% url 'market:index' %}">Back</a>
+</body>
+</html>

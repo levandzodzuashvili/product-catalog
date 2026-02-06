@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Catalog</title>
+    <link rel="stylesheet" href="{% static 'market/style.css' %}">
+</head>
+<body>
+
+<!-- Hero Section -->
+<header class="hero">
+    <h1>Welcome to Your Product Catalog</h1>
+    <p>Manage, view, and edit your products with ease.</p>
+    <a href="{% url 'market:add' %}" class="btn">+ Add New Product</a>
+</header>
+
+<!-- Products Grid -->
+<main class="products-grid">
+    {% for product in products %}
+        <div class="card">
+            <div class="card-info">
+                <h3>{{ product.name }}</h3>
+                <span class="price">${{ product.price }}</span>
+                <p>{{ product.description|truncatechars:80 }}</p>
+            </div>
+            <div class="card-actions">
+                <a href="{% url 'market:detail' product.pk %}" class="btn-small">View</a>
+                <a href="{% url 'market:edit' product.pk %}" class="btn-small">Edit</a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="empty">No products yet. Add your first product now 🚀</p>
+    {% endfor %}
+</main>
+
+</body>
+</html>

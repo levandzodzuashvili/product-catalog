@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Product</title>
+    <link rel="stylesheet" href="{% static 'market/style.css' %}">
+</head>
+<body>
+<h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Product</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Save</button>
+</form>
+<a class="btn" href="{% url 'market:index' %}">Back</a>
+</body>
+</html>
