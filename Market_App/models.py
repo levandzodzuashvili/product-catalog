@@ -28,13 +28,7 @@ class Product(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(Decimal('0.01'))]
     )
-    category = models.ForeignKey(
-        Category, 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True,
-        related_name='products'
-    )
+
     stock = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]

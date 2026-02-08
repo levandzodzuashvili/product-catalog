@@ -52,7 +52,6 @@ def product_list(request):
     
     context = {
         'products': products,
-        'categories': categories,
         'search_query': search_query,
         'selected_category': category_id,
         'cart_count': cart_count,
