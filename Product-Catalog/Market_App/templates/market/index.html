@@ -1,0 +1,297 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProductHub | Luxury Motion</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #6366f1;
+        --secondary: #a855f7;
+        --bg: #050505;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        background: var(--bg);
+        color: white;
+        margin: 0;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* --- THE ANIMATED BACKGROUND --- */
+      .bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        background: radial-gradient(circle at center, #111 0%, #000 100%);
+        overflow: hidden;
+      }
+
+      .orb {
+        position: absolute;
+        width: 60vw;
+        height: 60vw;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.4;
+        animation: float 20s infinite alternate ease-in-out;
+      }
+
+      .orb-1 {
+        background: var(--primary);
+        top: -20%;
+        left: -10%;
+      }
+      .orb-2 {
+        background: var(--secondary);
+        bottom: -20%;
+        right: -10%;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(100px, 50px) scale(1.1);
+        }
+      }
+
+      /* --- NAVBAR --- */
+      .navbar {
+        padding: 1.5rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-blur-box {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 2rem;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border-radius: 100px;
+        border: 1px solid var(--glass-border);
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-glimmer {
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        border-radius: 50%;
+        box-shadow: 0 0 15px var(--primary);
+      }
+
+      /* --- HERO --- */
+      .hero-section {
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+      }
+      .hero-section h1 {
+        font-size: 4rem;
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: -2px;
+        background: linear-gradient(to right, #fff, var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hero-section p {
+        color: #94a3b8;
+        font-size: 1.2rem;
+        margin-top: 10px;
+      }
+
+      /* --- GRID --- */
+      .grid-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+      }
+
+      .card-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes reveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .master-card {
+        background: var(--glass);
+        border-radius: 24px;
+        padding: 1.5rem;
+        border: 1px solid var(--glass-border);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(10px);
+      }
+
+      .master-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.07);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .image-box {
+        height: 180px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 18px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .price-tag {
+        display: inline-block;
+        background: white;
+        color: black;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-weight: 800;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .info h3 {
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+      }
+      .link-btn {
+        color: #94a3b8;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: 0.3s;
+      }
+      .link-btn:hover {
+        color: white;
+      }
+      .arrow-btn {
+        width: 40px;
+        height: 40px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .arrow-btn:hover {
+        transform: translateX(5px);
+        box-shadow: 0 0 15px var(--primary);
+      }
+
+      .btn-magical {
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-weight: 700;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        transition: 0.3s;
+      }
+      .btn-magical:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-canvas">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+
+    <nav class="navbar">
+      <div class="nav-blur-box">
+        <div class="logo">
+          <div class="logo-glimmer"></div>
+          <span>ProductHub</span>
+        </div>
+        <div class="nav-actions">
+          <a href="{% url 'market:add' %}" class="btn-magical">+ New Product</a>
+        </div>
+      </div>
+    </nav>
+
+<main class="main-content">
+  <header class="hero-section">
+    <h1>Manage <span class="gradient">Inventory</span></h1>
+    <p>Everything flows. Your products should too.</p>
+  </header>
+
+  <div class="grid-container">
+    {% for product in products %}
+      <div class="card-reveal" style="--i: {{ forloop.counter }}">
+        <div class="master-card">
+          <div class="image-box">
+            <span class="emoji">📦</span>
+          </div>
+          <div class="info">
+            <div class="price-tag">${{ product.price }}</div>
+            <h3>{{ product.name }}</h3>
+            <div class="actions">
+              <a href="{% url 'market:edit' product.pk %}" class="link-btn">Configure Item</a>
+              <a href="{% url 'market:detail' product.pk %}" class="arrow-btn">→</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 4rem;">
+        <p>The vault is currently empty. Start by adding a luxury asset.</p>
+      </div>
+    {% endfor %}
+  </div> </main>
+    </main>
+  </body>
+</html>

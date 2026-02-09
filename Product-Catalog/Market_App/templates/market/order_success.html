@@ -1,0 +1,12 @@
+{% extends 'market/checkout.html' %} {% block content %}
+<div style="text-align: center; padding: 50px">
+  <h1>🎉 Order Placed Successfully!</h1>
+  <p>
+    Thank you for your purchase. Your order has been received and is being
+    processed.
+  </p>
+  <a href="{% url 'Market_App:product_list' %}" class="btn"
+    >Continue Shopping</a
+  >
+</div>
+{% endblock %}
